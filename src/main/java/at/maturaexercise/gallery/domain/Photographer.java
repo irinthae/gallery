@@ -2,6 +2,7 @@ package at.maturaexercise.gallery.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Arrays;
@@ -23,8 +24,24 @@ public class Photographer extends User {
     private Address studioAddress;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "countryCode", column = @Column(name = "mobile_country_code", nullable = false)),
+            @AttributeOverride(name = "areaCode", column = @Column(name = "mobile_area_code", nullable = false)),
+            @AttributeOverride(name = "serialNumber", column = @Column(name = "mobile_serial_number", length = PhoneNumber.LENGTH_SERIAL_NUMBER, nullable = false))
+    })
+    @NotNull
     @Valid
     private PhoneNumber mobilePhoneNumber;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "countryCode", column = @Column(name = "studio_country_code")),
+            @AttributeOverride(name = "areaCode", column = @Column(name = "studio_area_code")),
+            @AttributeOverride(name = "serialNumber", column = @Column(name = "studio_serial_number", length = PhoneNumber.LENGTH_SERIAL_NUMBER))
+    })
+    @Valid
+    private PhoneNumber officePhoneNumber;
+
 
     @ElementCollection
     @JoinTable(name = "photographer_emails", foreignKey = @ForeignKey(name = "FK_photographer_emails_2_photographers"))
@@ -33,7 +50,7 @@ public class Photographer extends User {
     private Set<EmailAddress> emailAddresses;
 
     @Builder
-    public Photographer(String username, String password, String firstName, String lastName, Address studioAddress, PhoneNumber mobilePhoneNumber, Set<EmailAddress> emailAddresses) {
+    public Photographer(EmailAddress username, String password, String firstName, String lastName, Address studioAddress, PhoneNumber mobilePhoneNumber, Set<EmailAddress> emailAddresses) {
         super(username, password, firstName, lastName);
         this.studioAddress = studioAddress;
         this.mobilePhoneNumber = mobilePhoneNumber;

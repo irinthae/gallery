@@ -6,7 +6,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,7 +39,6 @@ public class Country extends AbstractPersistable<Long> {
     private String topLevelDomain;
 
     @Column(name = "countryCode")
-    @Positive
     @Min(MIN_COUNTRY_CODE)
     @Max(MAX_COUNTRY_CODE)
     private Integer countryCode;

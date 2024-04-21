@@ -19,17 +19,15 @@ import lombok.NoArgsConstructor;
 public class PhoneNumber {
     public static final int LENGTH_SERIAL_NUMBER = 16;
 
-    @Column(name = "countryCode")
     @NotNull
     @Positive
     private Integer countryCode;
 
-    @Column(name = "areaCode")
     @NotNull
     @Positive
     private Integer areaCode;
 
-    @Column(name = "serialNumber", length = LENGTH_SERIAL_NUMBER, nullable = false)
+    @Column(length = LENGTH_SERIAL_NUMBER, nullable = false)
     @NotBlank
     private String serialNumber;
 }

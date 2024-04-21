@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class TestFixtures {
 
+    //TODO Detached Entity
+
 //************** PHOTO *************************************************************************************************
 
     public static Photo photo() {
@@ -43,7 +45,7 @@ public class TestFixtures {
 
     public static Person person() {
         return Person.builder()
-                     .username("bilbo.baggins@gdmail.at")
+                     .username(new EmailAddress("bilbo.baggins@gdmail.at"))
                      .password("RingbearerSupreme")
                      .firstName("Bilbo")
                      .lastName("Baggins")
@@ -55,7 +57,7 @@ public class TestFixtures {
 
     public static Photographer photographer() {
         return Photographer.builder()
-                           .username("bilbo.baggins@gdmail.at")
+                           .username(new EmailAddress("bilbo.baggins@gdmail.at"))
                            .password("RingbearerSupreme")
                            .firstName("Bilbo")
                            .lastName("Baggins")

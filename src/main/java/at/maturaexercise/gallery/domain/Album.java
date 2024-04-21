@@ -44,6 +44,7 @@ public class Album extends AbstractPersistable<Long> {
     @ElementCollection
     @JoinTable(name = "album_photos", foreignKey = @ForeignKey(name = "FK_album_photos_2_albums"))
     @Builder.Default
+    @OrderColumn(name = "position")
     private List<AlbumPhoto> albumPhotos = new ArrayList<>(INITIAL_ALBUM_PHOTOS_SIZE);
 
     public List<AlbumPhoto> getAlbumPhotos() {
@@ -63,46 +64,25 @@ public class Album extends AbstractPersistable<Long> {
     }
 
     public Album addPhotos(Photo... photos) {
-        AtomicInteger maxPosition = new AtomicInteger(albumPhotos.stream()
-                                                                 .max(AlbumPhoto.positionComparator)
-                                                                 .map(AlbumPhoto::getPosition)
-                                                                 .orElse(0));
-
-        Arrays.stream(photos).forEach(p -> {
-            albumPhotos.add(AlbumPhoto.builder()
-                                      .photo(p)
-                                      .position(maxPosition.incrementAndGet())
-                                      .build());
-        });
+        Arrays.stream(photos).forEach(p -> albumPhotos.add(new AlbumPhoto(p)));
 
         return this;
     }
 
-    public Album insertPhotos(Photo photo, Integer position) {
-        //TODO
+    public Album insertPhotos(Integer position, Photo... photos) {
+        AtomicInteger index = new AtomicInteger(position);
 
-        return this;
-    }
-
-    public Album removePhoto(Photo photo) {
-        List<AlbumPhoto> foundPhotos = albumPhotos.stream()
-                                                  .filter(ap -> ap.getPhoto().equals(photo))
-                                                  .toList();
-
-        foundPhotos.forEach(fp -> {
-            int position = fp.getPosition();
-            albumPhotos.remove(fp);
-            albumPhotos.stream()
-                       .filter(ap -> ap.getPosition() > position)
-                       .forEach(ap -> ap.setPosition(ap.getPosition() - 1));
-        });
-
+        Arrays.stream(photos).forEach(p -> albumPhotos.add(index.getAndIncrement(), new AlbumPhoto(p)));
 
         return this;
     }
 
     public Album removePhotos(Photo... photos) {
-        Arrays.stream(photos).forEach(this::removePhoto);
+        Arrays.stream(photos).forEach(p -> {
+            List<AlbumPhoto> foundAlbumPhotos = albumPhotos.stream()
+                                                           .filter(ap -> ap.getPhoto().equals(p)).toList();
+            albumPhotos.removeAll(foundAlbumPhotos);
+        });
 
         return this;
     }

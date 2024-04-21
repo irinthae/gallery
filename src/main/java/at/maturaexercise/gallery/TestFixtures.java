@@ -11,7 +11,19 @@ public class TestFixtures {
 
     public static Photo photo() {
         return Photo.builder()
-                    .name("My Photo")
+                    .name("Gathering of Dwarves")
+                    .location(location())
+                    .creationTimeStamp(DateTimeFactory.now())
+                    .width(640)
+                    .height(480)
+                    .orientation(Orientation.PORTRAIT)
+                    .photographer(photographer())
+                    .build();
+    }
+
+    public static Photo photo(String name) {
+        return Photo.builder()
+                    .name(name)
                     .location(location())
                     .creationTimeStamp(DateTimeFactory.now())
                     .width(640)
@@ -84,7 +96,30 @@ public class TestFixtures {
                           .serialNumber("12341234")
                           .build();
     }
+
+//************** ALBUM *************************************************************************************************
+
+    public static Album album() {
+        return Album.builder()
+                    .name("Bilbo's Odyssey: A Tale of the Lonely Mountain")
+                    .type(AlbumType.PHYSICAL)
+                    .owner(photographer())
+                    .build();
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

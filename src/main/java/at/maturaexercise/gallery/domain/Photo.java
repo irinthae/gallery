@@ -1,6 +1,7 @@
 package at.maturaexercise.gallery.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -21,17 +22,20 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "photos")
 public class Photo extends AbstractPersistable<Long> {
+    public static final int LENGTH_PHOTO_NAME = 64;
+    public static final int LENGTH_DESCRIPTION = 256;
+    public static final int LENGTH_ORIENTATION = 1;
 
-    @Column(name = "photo_name", length = 64)
-    @NotNull
+    @Column(name = "photo_name", length = LENGTH_PHOTO_NAME, nullable = false)
     @NotBlank
     private String name;
 
-    @Column(name = "description", length = 256)
+    @Column(name = "description", length = LENGTH_DESCRIPTION)
     private String description;
 
     @Column(name = "location")
     @Embedded
+    @Valid
     private Location location;
 
     @Column(name = "creationTimeStamp")
@@ -40,7 +44,7 @@ public class Photo extends AbstractPersistable<Long> {
     private LocalDateTime creationTimeStamp;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_photos_2_photographers"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_photos_2_photographers"))
     private Photographer photographer;
 
     @PositiveOrZero
@@ -49,7 +53,7 @@ public class Photo extends AbstractPersistable<Long> {
     @PositiveOrZero
     private Integer height;
 
-    @Column(length = 1, columnDefinition = "CHAR(1) CHECK (orientation IN ('L', 'P', 'S'))")
+    @Column(length = LENGTH_ORIENTATION, columnDefinition = "CHAR(1) CHECK (orientation IN ('L', 'P', 'S'))")
     private Orientation orientation;
 
 }

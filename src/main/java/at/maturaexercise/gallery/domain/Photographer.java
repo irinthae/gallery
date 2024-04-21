@@ -15,6 +15,8 @@ import java.util.Set;
 @Entity
 @Table(name = "photographers")
 public class Photographer extends User {
+    public static final int LENGTH_EMAIL_ADDRESSES = 64;
+    public static final int INITIAL_EMAIL_ADDRESSES_SIZE = 3;
 
     @Embedded
     @Valid
@@ -25,8 +27,8 @@ public class Photographer extends User {
     private PhoneNumber mobilePhoneNumber;
 
     @ElementCollection
-    @JoinTable(name = "photographer_emails", foreignKey = @ForeignKey(name = "FK_photographer_emails_2_photographer"))
-    @Column(name = "email", nullable = false, length = 64)
+    @JoinTable(name = "photographer_emails", foreignKey = @ForeignKey(name = "FK_photographer_emails_2_photographers"))
+    @Column(name = "email", nullable = false, length = LENGTH_EMAIL_ADDRESSES)
     @Setter(AccessLevel.PRIVATE)
     private Set<EmailAddress> emailAddresses;
 
@@ -35,7 +37,7 @@ public class Photographer extends User {
         super(username, password, firstName, lastName);
         this.studioAddress = studioAddress;
         this.mobilePhoneNumber = mobilePhoneNumber;
-        this.emailAddresses = (emailAddresses != null) ? new HashSet<>(emailAddresses) : new HashSet<>(3);
+        this.emailAddresses = (emailAddresses != null) ? new HashSet<>(emailAddresses) : new HashSet<>(INITIAL_EMAIL_ADDRESSES_SIZE);
     }
 
     public Set<EmailAddress> getEmailAddresses() {

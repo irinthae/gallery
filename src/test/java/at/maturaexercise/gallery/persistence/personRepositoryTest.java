@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class personRepositoryTest {
 
     @Autowired
-    PersonRepository personRepository;
+    private PersonRepository personRepository;
 
     @Test
     void ensureSaveAndReReadWorks() {

@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 public class Photo extends AbstractPersistable<Long> {
 
     @Column(name = "photo_name", length = 64)
+    @NotNull
     @NotBlank
     private String name;
 
@@ -39,6 +40,7 @@ public class Photo extends AbstractPersistable<Long> {
     private LocalDateTime creationTimeStamp;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_photos_2_photographers"))
     private Photographer photographer;
 
     @PositiveOrZero

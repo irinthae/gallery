@@ -29,6 +29,7 @@ public class PhoneNumber {
     private Integer areaCode;
 
     @Column(name = "serialNumber", length = 16)
+    @NotNull
     @NotBlank
     private String serialNumber;
 }

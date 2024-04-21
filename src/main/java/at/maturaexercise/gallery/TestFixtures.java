@@ -31,11 +31,11 @@ public class TestFixtures {
 
     public static Person person() {
         return Person.builder()
-                     .username("irina.gramsch@gmx.at")
-                     .password("geheim")
-                     .firstName("Irina")
-                     .lastName("Gramsch")
-                     .nickname("ig")
+                     .username("bilbo.baggins@gdmail.at")
+                     .password("RingbearerSupreme")
+                     .firstName("Bilbo")
+                     .lastName("Baggins")
+                     .nickName("Wyrmslayer")
                      .build();
     }
 
@@ -43,13 +43,13 @@ public class TestFixtures {
 
     public static Photographer photographer() {
         return Photographer.builder()
-                           .username("irina.gramsch@gmx.at")
-                           .password("geheim")
-                           .firstName("Irina")
-                           .lastName("Gramsch")
+                           .username("bilbo.baggins@gdmail.at")
+                           .password("RingbearerSupreme")
+                           .firstName("Bilbo")
+                           .lastName("Baggins")
                            .studioAddress(address())
                            .mobilePhoneNumber(phoneNumber())
-                           .emailAddresses(Set.of(new Email("irina.gramsch@gmx.at"), new Email("i.gramsch@spg.at")))
+                           .emailAddresses(Set.of(new EmailAddress("dragonbane.bilbo@thorinandcompany.at"), new EmailAddress("b.baggins@pipeweedlovers.at")))
                            .build();
     }
 
@@ -59,7 +59,7 @@ public class TestFixtures {
         return Address.builder()
                       .streetNumber("Bag End")
                       .zipCode("1220")
-                      .city("Hobbition")
+                      .city("Hobbiton")
                       .country(country())
                       .build();
     }

@@ -1,6 +1,10 @@
 package at.maturaexercise.gallery.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,9 +17,29 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @MappedSuperclass
 public class User extends AbstractPersistable<Long> {
 
+    public static final int LENGTH_USERNAME = 64;
+    public static final int LENGTH_FIRST_NAME = 64;
+    public static final int LENGTH_LAST_NAME = 32;
+
+    @Column(name = "username", length = LENGTH_USERNAME)
+    @Email
+    @NotNull
+    @NotBlank
     private String username;
+
+    @Column(name = "password")
+    @NotNull
+    @NotBlank
     private String password;
+
+    @Column(name = "firstName", length = LENGTH_FIRST_NAME)
+    @NotNull
+    @NotBlank
     private String firstName;
+
+    @Column(name = "lastName", length = LENGTH_LAST_NAME)
+    @NotNull
+    @NotBlank
     private String lastName;
 
 }

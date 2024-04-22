@@ -1,0 +1,9 @@
+### all albums
+
+GET http://localhost:8080/api/albums
+Accept: application/json
+
+### all albums with a name containing 'Odyssey'
+
+GET http://localhost:8080/api/albums?namePart=Odyssey
+Accept: application/json

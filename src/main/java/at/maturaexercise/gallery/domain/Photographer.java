@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import static at.maturaexercise.gallery.foundation.Guard.ensureNotNull;
+
 @Data
 @NoArgsConstructor
 
@@ -53,7 +55,7 @@ public class Photographer extends User {
     public Photographer(EmailAddress username, String password, String firstName, String lastName, Address studioAddress, PhoneNumber mobilePhoneNumber, Set<EmailAddress> emailAddresses) {
         super(username, password, firstName, lastName);
         this.studioAddress = studioAddress;
-        this.mobilePhoneNumber = mobilePhoneNumber;
+        this.mobilePhoneNumber = ensureNotNull(mobilePhoneNumber);
         this.emailAddresses = (emailAddresses != null) ? new HashSet<>(emailAddresses) : new HashSet<>(INITIAL_EMAIL_ADDRESSES_SIZE);
     }
 

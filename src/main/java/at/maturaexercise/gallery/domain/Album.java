@@ -16,6 +16,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static at.maturaexercise.gallery.foundation.Guard.isNotNull;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -64,7 +66,7 @@ public class Album extends AbstractPersistable<Long> {
     }
 
     public Album addPhotos(Photo... photos) {
-        Arrays.stream(photos).forEach(p -> albumPhotos.add(new AlbumPhoto(p)));
+        Arrays.stream(photos).filter(isNotNull).forEach(p -> albumPhotos.add(new AlbumPhoto(p)));
 
         return this;
     }
@@ -72,13 +74,13 @@ public class Album extends AbstractPersistable<Long> {
     public Album insertPhotos(Integer position, Photo... photos) {
         AtomicInteger index = new AtomicInteger(position);
 
-        Arrays.stream(photos).forEach(p -> albumPhotos.add(index.getAndIncrement(), new AlbumPhoto(p)));
+        Arrays.stream(photos).filter(isNotNull).forEach(p -> albumPhotos.add(index.getAndIncrement(), new AlbumPhoto(p)));
 
         return this;
     }
 
     public Album removePhotos(Photo... photos) {
-        Arrays.stream(photos).forEach(p -> {
+        Arrays.stream(photos).filter(isNotNull).forEach(p -> {
             List<AlbumPhoto> foundAlbumPhotos = albumPhotos.stream()
                                                            .filter(ap -> ap.getPhoto().equals(p)).toList();
             albumPhotos.removeAll(foundAlbumPhotos);

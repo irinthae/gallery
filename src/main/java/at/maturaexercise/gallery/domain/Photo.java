@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.time.LocalDateTime;
+import java.util.function.Predicate;
 
 @Data
 @NoArgsConstructor
@@ -56,4 +57,8 @@ public class Photo extends AbstractPersistable<Long> {
     @Column(length = LENGTH_ORIENTATION, columnDefinition = "CHAR(1) CHECK (orientation IN ('L', 'P', 'S'))")
     private Orientation orientation;
 
+    public static final Predicate<Photo> hasCorrectOrientation = photo ->
+            (photo.width > photo.height && photo.orientation == Orientation.LANDSCAPE) ||
+            (photo.width < photo.height && photo.orientation == Orientation.PORTRAIT) ||
+            (photo.width == photo.height && photo.orientation == Orientation.SQUARE);
 }

@@ -109,6 +109,14 @@ public class TestFixtures {
                     .build();
     }
 
+    public static Album album(String name) {
+        return Album.builder()
+                    .name(name)
+                    .type(AlbumType.PHYSICAL)
+                    .owner(photographer())
+                    .build();
+    }
+
 
 }
 

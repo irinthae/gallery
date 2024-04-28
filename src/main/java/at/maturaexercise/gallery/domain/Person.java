@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Comparator;
+
 @Data
 @NoArgsConstructor
 
@@ -25,4 +27,9 @@ public class Person extends User {
         super(username, password, firstName, lastName);
         this.nickName = nickName;
     }
+
+    public static final Comparator<Person> byFirstName = Comparator.comparing(Person::getFirstName);
+    public static final Comparator<Person> byLastName = Comparator.comparing(Person::getLastName);
+    public static final Comparator<Person> byLastNameDesc = byLastName.reversed();
+    public static final Comparator<Person> byName = byLastName.thenComparing(byFirstName);
 }

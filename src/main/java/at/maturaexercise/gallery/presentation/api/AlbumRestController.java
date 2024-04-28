@@ -16,8 +16,10 @@ import java.util.Optional;
 @Slf4j
 
 @RestController
-@RequestMapping("/api/albums")
+@RequestMapping(AlbumRestController.BASE_URL)
 public class AlbumRestController {
+
+    protected static final String BASE_URL = "/api/albums";
 
     private final AlbumService albumService;
 

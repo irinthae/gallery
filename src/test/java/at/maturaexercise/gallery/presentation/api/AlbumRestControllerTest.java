@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static at.maturaexercise.gallery.TestFixtures.album;
+import static at.maturaexercise.gallery.presentation.api.AlbumRestController.BASE_URL;
 import static org.assertj.core.api.Assumptions.assumeThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -43,7 +44,7 @@ class AlbumRestControllerTest {
         Album album = album();
         when(albumService.fetchAlbums(any())).thenReturn(List.of(album));
 
-        var request = get("/api/albums").accept(MediaType.APPLICATION_JSON);
+        var request = get(BASE_URL).accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
                .andExpect(status().isOk())
@@ -59,7 +60,7 @@ class AlbumRestControllerTest {
         Album album = album();
         when(albumService.fetchAlbums(any())).thenReturn(Collections.emptyList());
 
-        var request = get("/api/albums").accept(MediaType.APPLICATION_JSON);
+        var request = get(BASE_URL).accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
                .andExpect(status().isNoContent())
@@ -70,7 +71,7 @@ class AlbumRestControllerTest {
     void ensureGetApiAlbumsReturnsInternalServerErrorOnDataQualityException() throws Exception {
         when(albumService.fetchAlbums(any())).thenThrow(DataQualityException.forInvalidEnumDBValue("X", AlbumType.class));
 
-        var request = get("/api/albums").accept(MediaType.APPLICATION_JSON);
+        var request = get(BASE_URL).accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
                .andExpect(status().isInternalServerError())
